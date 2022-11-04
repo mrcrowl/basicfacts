@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { GameScreen } from './screens/game';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Game } from './screens/game/game';
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <GameScreen />
+            <Game />
           </Route>
           <Route path="/01"></Route>
         </Switch>
