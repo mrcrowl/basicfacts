@@ -13,12 +13,13 @@ export type GameState = {
   readonly activeProblem: Problem;
   readonly problems: readonly Problem[];
   readonly problemCount: number;
+  readonly answers: string[];
 };
 
 export type Problem = {
   readonly prompt: string;
   readonly choices: string[];
-  readonly answer: string;
+  readonly correctAnswer: string;
 };
 
 export type GameModes = 'mult' | 'div' | 'both';

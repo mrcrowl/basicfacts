@@ -34,7 +34,7 @@ function makeDivisionProblem(options: GameOptions): Problem {
   const choices = makeDivisonChoices(answerDivisor, options);
 
   return {
-    answer,
+    correctAnswer: answer,
     choices,
     prompt,
   };

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import React from 'react';
 
 const ANSWER_BUTTON_STYLES = css`
   font-size: 10vh;
@@ -18,14 +19,10 @@ const ANSWER_BUTTON_STYLES = css`
     color: white;
   }
 `;
-type AnswerButtonProps = { answer: string; onClick?: (answer: string) => void };
+type AnswerButtonProps = { answer: string; onClick?: React.MouseEventHandler };
 export function AnswerButton({ answer, onClick }: AnswerButtonProps) {
-  function handleClick() {
-    onClick?.(answer);
-  }
-
   return (
-    <button onClick={handleClick} css={ANSWER_BUTTON_STYLES}>
+    <button onClick={onClick} css={ANSWER_BUTTON_STYLES}>
       {answer}
     </button>
   );

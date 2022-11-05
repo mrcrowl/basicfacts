@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { GameScreen } from './GameScreen';
-import { GameActions, GameOptions, GameState } from './model';
+import { ChooseAnswerAction, GameActions, GameOptions, GameState } from './model';
 import { makeProblems } from './problem';
 
 type GameProps = { options: GameOptions };
@@ -15,12 +15,31 @@ function makeGameState(props: GameProps): GameState {
 
   return {
     problems,
-    activeProblemIndex: 9,
+    activeProblemIndex: 0,
     activeProblem: problems[0],
     problemCount: problems.length,
+    answers: [],
   };
 }
 
-function gameReducer(state: GameState, _: GameActions): GameState {
+function gameReducer(state: GameState, action: GameActions): GameState {
+  switch (action.type) {
+    case 'choose_answer':
+      return submitAnswerAndMoveToNextQuestion(state, action);
+
+    default:
+  }
   return state;
+}
+
+function submitAnswerAndMoveToNextQuestion(state: GameState, action: ChooseAnswerAction): GameState {
+  state.answers[state.activeProblemIndex] = action.answer;
+
+  const nextIndex = state.activeProblemIndex + 1;
+
+  return {
+    ...state,
+    activeProblemIndex: nextIndex,
+    activeProblem: state.problems[nextIndex],
+  };
 }
