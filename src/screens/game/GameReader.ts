@@ -31,7 +31,7 @@ export class GameReader {
 
   get elapsedTime(): string {
     const { wholeMinutes, leftoverSeconds } = secondsToWholeMinsAndLeftoverSecs(this.state.elapsedSeconds);
-    return `${wholeMinutes > 0 ? wholeMinutes + 'm ' : ''}${leftoverSeconds}s`;
+    return `${wholeMinutes > 0 ? wholeMinutes + ' mins ' : ''}${leftoverSeconds} secs`;
   }
 
   get numProblems() {
@@ -39,16 +39,20 @@ export class GameReader {
   }
 
   get percentCorrectDisplay() {
-    return `${Math.round((this.numCorrectAnswers / this.numProblems) * 100)}%`;
+    return `${Math.round((this.numCorrectAnswers / this.numAnswers) * 100)}%`;
   }
 
   get averageTimePerQuestion() {
     const averageTimePerQuestion = this.state.elapsedSeconds / this.numAnswers;
-    return `${averageTimePerQuestion.toFixed(1)}s per question`;
+    return `${averageTimePerQuestion.toFixed(1)} seconds per question`;
   }
 
   get percentCorrect() {
-    return (this.numCorrectAnswers / this.numProblems) * 100;
+    return (this.numCorrectAnswers / this.numAnswers) * 100;
+  }
+
+  get allAnswered(): boolean {
+    return this.numAnswers === this.numProblems;
   }
 
   get finished() {

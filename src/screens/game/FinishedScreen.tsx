@@ -1,10 +1,11 @@
 import { css } from '@emotion/react';
+import { useMemo } from 'react';
 import { ButtonDock } from '../../components/ButtonDock';
 import { ExitButton as HomeButton } from '../../components/HomeButton';
 import { LinkButton } from '../../components/LinkButton';
 import { formatDuration } from '../../util/format';
 import { GameReader } from '../game/GameReader';
-import { GameState } from '../game/model';
+import { GameState, TimeLimits } from '../game/model';
 
 const FINISHED_SCREEN_STYLES = css`
   width: 100vw;
@@ -62,8 +63,17 @@ const FINISHED_SCREEN_STYLES = css`
     color: #eb3e3e;
   }
 `;
+
+const FINISHED_WORDS = ['ANOTHER!', 'AGAIN!', 'REPLAY', 'MORE!'];
+
 type FinishedScreenProps = { state: GameState };
 export function FinishedScreen({ state }: FinishedScreenProps) {
+  function chooseNextWord() {
+    const wordIndex = Math.trunc(Math.random() * FINISHED_WORDS.length);
+    return FINISHED_WORDS[wordIndex];
+  }
+
+  const finishedWord = useMemo(chooseNextWord, []);
   const reader = new GameReader(state);
 
   return (
@@ -75,21 +85,24 @@ export function FinishedScreen({ state }: FinishedScreenProps) {
       </section>
       <section>
         <p className="title">Time</p>
-        <p className={`fact ${judgeTimeRemaining(reader.secondsRemaining)}`}>{reader.elapsedTime}</p>
+        <p className={`fact ${judgeTimeRemaining(reader.secondsRemaining, state.options.timeLimit)}`}>
+          {reader.elapsedTime}
+        </p>
         <p className="micro-fact">{reader.averageTimePerQuestion}</p>
       </section>
       <section>
         <p className="title">Accuracy</p>
-        <p className={`fact ${judgeScore(reader.percentCorrect)}`}>
-          {reader.numCorrectAnswers}/{reader.numProblems}
+        <p className={`fact ${judgeScore(reader.percentCorrect, reader.allAnswered)}`}>
+          {reader.numCorrectAnswers}/{reader.numAnswers}
           <br />
         </p>
         <p className="micro-fact">
-          {reader.percentCorrectDisplay} for {reader.numAnswers} answers
+          {reader.percentCorrectDisplay} accurate{' '}
+          {!reader.allAnswered && <>({reader.numProblems - reader.numAnswers} missed)</>}
         </p>
       </section>
       <ButtonDock>
-        <LinkButton to="/countdown">ANOTHER!</LinkButton>
+        <LinkButton to="/countdown">{finishedWord}</LinkButton>
       </ButtonDock>
     </div>
   );
@@ -97,17 +110,22 @@ export function FinishedScreen({ state }: FinishedScreenProps) {
 
 type Judgements = 'ok' | 'poor' | 'great';
 
-function judgeScore(percent: number): Judgements {
+function judgeScore(percent: number, allAnswered: boolean): Judgements {
   if (percent < 70) {
     return 'poor';
-  } else if (percent < 92) {
+  } else if (percent < 93) {
     return 'ok';
   } else {
-    return 'great';
+    return allAnswered ? 'great' : 'ok';
   }
 }
 
-function judgeTimeRemaining(secondsRemaining: number): Judgements {
+function judgeTimeRemaining(secondsRemaining: number, difficult: TimeLimits): Judgements {
+  switch (difficult) {
+    case 'insane':
+      return secondsRemaining > 2 ? 'great' : 'ok';
+  }
+
   if (secondsRemaining < 5) {
     return 'poor';
   } else if (secondsRemaining < 30) {
