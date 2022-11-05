@@ -1,5 +1,5 @@
 import shuffle from 'z-shuffle';
-import { GameOptions, Problem } from './model';
+import { GameModes, GameOptions, Problem } from './model';
 
 const NUM_CHOICES = 4;
 
@@ -16,20 +16,71 @@ export function makeProblems(options: GameOptions): readonly Problem[] {
 }
 
 function makeProblem(options: GameOptions): Problem {
-  switch (options.modes[0]) {
+  const mode = options.modes[Math.trunc(Math.random() * options.modes.length)];
+  switch (mode) {
     case 'div':
       return makeDivisionProblem(options);
     case 'mult':
       return makeMultiplicationProblem(options);
-    case 'add': {
-      return Math.random() < 0.5 ? makeDivisionProblem(options) : makeMultiplicationProblem(options);
-    }
-    case 'sub': {
-      return Math.random() < 0.5 ? makeDivisionProblem(options) : makeMultiplicationProblem(options);
-    }
+    case 'add':
+      return makeAdditionProblem(options);
+    case 'sub':
+      return makeSubtractionProblem(options);
     default:
       throw new Error(`mode NYI: ${options.modes[0]}`);
   }
+}
+
+function makeAdditionProblem(options: GameOptions): Problem {
+  const addend1 = randomBetween(options.min, options.max);
+  const addend2 = randomBetween(options.min, options.max);
+  const sum = addend1 + addend2;
+  const answer = `${sum}`;
+  const prompt = `${addend1} + ${addend2}`;
+
+  let choices: number[];
+  if (addend1 == 1 || addend2 == 1) {
+    choices = [
+      addend2 * (addend1 + 1), //
+      addend1 * (addend2 + 1),
+    ];
+  }
+
+  const above1 = addend1 + 1;
+  const below1 = addend1 - 1;
+  const above2 = addend2 + 1;
+  const below2 = addend2 - 1;
+  choices = [addend1 + above1, addend2 + below1, above2 + below2];
+
+  return {
+    correctAnswer: answer,
+    choices: finaliseChoices(choices, sum, options, 'add'),
+    prompt,
+  };
+}
+
+function makeSubtractionProblem(options: GameOptions): Problem {
+  const addend1 = randomBetween(options.min, options.max);
+  const addend2 = randomBetween(options.min, options.max);
+  const sum = addend1 + addend2;
+  const answer = `${addend1}`;
+  const prompt = `${sum} - ${addend2}`;
+
+  let choices: number[];
+  if (addend1 == 1) {
+    choices = [
+      addend1 + 1, //
+      addend1 + 2,
+    ];
+  }
+
+  choices = [addend1 - 1, addend1 + 1];
+
+  return {
+    correctAnswer: answer,
+    choices: finaliseChoices(choices, addend1, options, 'sub'),
+    prompt,
+  };
 }
 
 function makeMultiplicationProblem(options: GameOptions): Problem {
@@ -113,6 +164,33 @@ function finaliseDivisionChoices(predefinedChoices: number[], answer: number, op
   while (choiceSet.size < NUM_CHOICES) {
     const random = randomBetween(options.min, options.max);
     choiceSet.add(random);
+  }
+
+  const stringChoices = Array.from(choiceSet).map((choice) => `${choice}`);
+  const shuffledStringChoices = shuffle(stringChoices);
+  return shuffledStringChoices;
+}
+
+/** Fills out up to NUM_CHOICES choices as shuffled, strings. */
+function finaliseChoices(predefinedChoices: number[], answer: number, options: GameOptions, mode: GameModes): string[] {
+  const choiceSet = new Set([...predefinedChoices, answer]);
+  while (choiceSet.size < NUM_CHOICES) {
+    const random1 = randomBetween(options.min, options.max);
+    const random2 = randomBetween(options.min, options.max);
+    switch (mode) {
+      case 'add':
+        choiceSet.add(random1 + random2);
+        break;
+      case 'sub':
+        choiceSet.add(random1);
+        break;
+      case 'mult':
+        choiceSet.add(random1 * random2);
+        break;
+      case 'div':
+        choiceSet.add(random1);
+        break;
+    }
   }
 
   const stringChoices = Array.from(choiceSet).map((choice) => `${choice}`);
