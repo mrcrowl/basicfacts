@@ -61,6 +61,8 @@ export function Menu() {
     setModes(newModes);
   }
 
+  const noModesSelected = modes.length === 0;
+
   return (
     <div css={MENU_STYLES}>
       <Title />
@@ -71,6 +73,7 @@ export function Menu() {
         value={modes}
         onSelect={handleModeSelect}
         onDeselect={handleModeDeselect}
+        validationError={noModesSelected}
       ></SplitButton>
       <p>How many questions?</p>
       <SplitButton
@@ -89,7 +92,9 @@ export function Menu() {
         {timeLimit === 'insane' ? '!!' : ''}
       </div>
       <ButtonDock>
-        <LinkButton to="/countdown">START!</LinkButton>
+        <LinkButton to="/countdown" disabled={noModesSelected}>
+          START!
+        </LinkButton>
       </ButtonDock>
     </div>
   );

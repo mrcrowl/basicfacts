@@ -11,11 +11,6 @@ const BUTTON_DOCK_STYLES = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  &:active {
-    bottom: 0.9rem;
-    text-decoration: none;
-  }
 `;
 
 type ButtonDockProps = {
