@@ -43,17 +43,12 @@ const TIME_LIMIT_OPTIONS: InputOption<TimeLimits>[] = [
 ];
 
 export function Menu() {
-  const [timeLimit, setTimeLimit] = useState<TimeLimits>('easy');
-  const [mode, setMode] = useState<GameModes>('mult');
-  const [questions, setQuestions] = useState<number>(10);
+  const options = Settings.gameOptions;
+  const [timeLimit, setTimeLimit] = useState(options.timeLimit);
+  const [mode, setMode] = useState(options.mode);
+  const [questions, setQuestions] = useState(options.questions);
 
-  Settings.gameOptions = {
-    max: 11,
-    min: 1,
-    mode,
-    questions,
-    timeLimit,
-  };
+  Settings.gameOptions = { max: 10, min: 1, mode, questions, timeLimit };
 
   return (
     <div css={MENU_STYLES}>
