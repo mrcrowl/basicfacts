@@ -8,10 +8,11 @@ export function Menu() {
   function goGame() {
     navigate('/game');
   }
+
   return (
     <>
       <Title />
-      <StartButton to="" onClick={goGame}>
+      <StartButton to="/game" onClick={goGame}>
         START!
       </StartButton>
     </>
