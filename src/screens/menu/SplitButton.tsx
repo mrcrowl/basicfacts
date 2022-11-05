@@ -10,10 +10,13 @@ const CONTAINER_STYLES = css`
   border-radius: 0.5rem;
   overflow: hidden;
 
-  &.modes > div:nth-child(1),
-  &.modes > div:nth-child(2) {
+  &.modes > div {
     font-size: 3rem;
     line-height: 2.5rem;
+  }
+
+  &.modes > div.selected {
+    border-right-color: white;
   }
 `;
 
@@ -66,7 +69,6 @@ export function SplitButton<T>({ modes, options, value, onSelect, onDeselect }: 
 
         return (
           <div
-            onMouseDown={handleSelect}
             onTouchStart={handleSelect}
             css={BUTTON_STYLES}
             className={`${selected ? 'selected' : ''}`}

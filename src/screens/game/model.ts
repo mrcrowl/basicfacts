@@ -25,7 +25,7 @@ export type Problem = {
   readonly correctAnswer: string;
 };
 
-export type GameModes = 'mult' | 'div' | 'both';
+export type GameModes = 'add' | 'sub' | 'mult' | 'div';
 
 export type TimeLimits = 'easy' | 'med' | 'hard' | 'insane';
 

@@ -22,9 +22,10 @@ const MENU_STYLES = css`
 `;
 
 const MODE_OPTIONS: InputOption<GameModes>[] = [
+  { text: '+', value: 'add' },
+  { text: '-', value: 'sub' },
   { text: '×', value: 'mult' },
   { text: '÷', value: 'div' },
-  { text: 'Both', value: 'both' },
 ];
 
 const QUESTION_OPTIONS: InputOption<number>[] = [
@@ -63,7 +64,7 @@ export function Menu() {
   return (
     <div css={MENU_STYLES}>
       <Title />
-      <p>Which mode?</p>
+      <p>Which modes?</p>
       <SplitButton
         modes
         options={MODE_OPTIONS}

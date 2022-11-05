@@ -21,7 +21,10 @@ function makeProblem(options: GameOptions): Problem {
       return makeDivisionProblem(options);
     case 'mult':
       return makeMultiplicationProblem(options);
-    case 'both': {
+    case 'add': {
+      return Math.random() < 0.5 ? makeDivisionProblem(options) : makeMultiplicationProblem(options);
+    }
+    case 'sub': {
       return Math.random() < 0.5 ? makeDivisionProblem(options) : makeMultiplicationProblem(options);
     }
     default:
