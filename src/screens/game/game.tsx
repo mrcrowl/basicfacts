@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { GameScreen } from './GameScreen';
-import { ChooseAnswerAction, GameActions, GameOptions, GameState } from './model';
+import { ChooseAnswerAction, GameActions, GameOptions, GameState, TimeLimits } from './model';
 import { makeProblems } from './problem';
 
 type GameProps = { options: GameOptions };
@@ -10,8 +10,8 @@ export function Game(props: GameProps) {
   return <GameScreen state={state} dispatch={dispatch} />;
 }
 
-function makeGameState(props: GameProps): GameState {
-  const problems = makeProblems(props.options);
+function makeGameState({ options }: GameProps): GameState {
+  const problems = makeProblems(options);
 
   return {
     problems,
@@ -19,6 +19,7 @@ function makeGameState(props: GameProps): GameState {
     activeProblem: problems[0],
     problemCount: problems.length,
     answers: [],
+    remainingSeconds: options.questions * secsPerQuestion(options.timeLimit),
   };
 }
 
@@ -42,4 +43,17 @@ function submitAnswerAndMoveToNextQuestion(state: GameState, action: ChooseAnswe
     activeProblemIndex: nextIndex,
     activeProblem: state.problems[nextIndex],
   };
+}
+
+function secsPerQuestion(limit: TimeLimits): number {
+  switch (limit) {
+    case 'easy':
+      return 5;
+    case 'med':
+      return 4;
+    case 'hard':
+      return 2.5;
+    case 'insane':
+      return 1;
+  }
 }

@@ -23,3 +23,8 @@ export function formatTabId(tabId: string | null | undefined): string {
   if (tabId.length < 8) return '';
   return `HH${tabId.substring(tabId.length - 8).toUpperCase()}`;
 }
+
+export function padZero(n: number, size: number): string {
+  const padded = `00000${n}`;
+  return padded.slice(padded.length - size);
+}

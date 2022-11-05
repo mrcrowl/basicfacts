@@ -5,8 +5,12 @@ const NUM_CHOICES = 4;
 
 export function makeProblems(options: GameOptions): readonly Problem[] {
   const problems: Problem[] = [];
-  for (let i = 0; i < options.questions; i++) {
-    problems.push(makeProblem(options));
+  let lastProblem: Problem | undefined;
+  while (problems.length < options.questions) {
+    const problem = makeProblem(options);
+    if (problem.prompt === lastProblem?.prompt) continue;
+
+    problems.push(problem);
   }
   return problems;
 }

@@ -14,6 +14,7 @@ export type GameState = {
   readonly problems: readonly Problem[];
   readonly problemCount: number;
   readonly answers: string[];
+  readonly remainingSeconds: number;
 };
 
 export type Problem = {
