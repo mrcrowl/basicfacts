@@ -84,7 +84,7 @@ export function FinishedScreen({ state }: FinishedScreenProps) {
         <p className="micro-fact">allowed time: {formatDuration(state.allowedSeconds)}</p>
       </section>
       <section>
-        <p className="title">Time</p>
+        <p className="title">Speed</p>
         <p className={`fact ${judgeTimeRemaining(reader.secondsRemaining, state.options.timeLimit)}`}>
           {reader.elapsedTime}
         </p>

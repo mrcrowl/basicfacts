@@ -31,7 +31,7 @@ export class GameReader {
 
   get elapsedTime(): string {
     const { wholeMinutes, leftoverSeconds } = secondsToWholeMinsAndLeftoverSecs(this.state.elapsedSeconds);
-    return `${wholeMinutes > 0 ? wholeMinutes + ' mins ' : ''}${leftoverSeconds} secs`;
+    return `${wholeMinutes > 0 ? wholeMinutes + ' min ' : ''}${leftoverSeconds} sec`;
   }
 
   get numProblems() {

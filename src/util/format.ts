@@ -37,5 +37,5 @@ export function secondsToWholeMinsAndLeftoverSecs(remainingSeconds: number) {
 
 export function formatDuration(seconds: number): string {
   const { wholeMinutes, leftoverSeconds } = secondsToWholeMinsAndLeftoverSecs(seconds);
-  return `${wholeMinutes > 0 ? wholeMinutes + 'm ' : ''}${leftoverSeconds}s`;
+  return `${wholeMinutes > 0 ? wholeMinutes + ' min ' : ''}${leftoverSeconds} sec`;
 }
