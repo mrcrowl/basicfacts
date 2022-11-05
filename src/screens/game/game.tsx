@@ -1,8 +1,11 @@
 import { useEffect, useReducer } from 'react';
+import { FinishedScreen } from './FinishedScreen';
 import { GameScreen } from './GameScreen';
-import { ChooseAnswerAction, GameActions, GameDispatch, GameOptions, GameReader, GameState, TimeLimits } from './model';
+import { ChooseAnswerAction, GameActions, GameDispatch, GameOptions, GameState } from './model';
+import { GameReader } from './GameReader';
 import { makeProblems } from './problem';
 import { useCountdownTimer } from './useCountdownTimer';
+import { secsPerQuestion } from '../../util/tuning';
 
 type GameProps = { options: GameOptions };
 export function Game(props: GameProps) {
@@ -10,7 +13,11 @@ export function Game(props: GameProps) {
   useStartGame(dispatch);
   useCountdownTimer(state, dispatch);
 
-  return <GameScreen state={state} dispatch={dispatch} />;
+  return new GameReader(state).finished ? (
+    <FinishedScreen state={state} />
+  ) : (
+    <GameScreen state={state} dispatch={dispatch} />
+  );
 }
 
 function useStartGame(dispatch: GameDispatch) {
@@ -25,6 +32,7 @@ function makeGameState({ options }: GameProps): GameState {
   const problems = makeProblems(options);
   const seconds = options.questions * secsPerQuestion(options.timeLimit);
   return {
+    options,
     problems,
     activeProblemIndex: 0,
     problemCount: problems.length,
@@ -76,17 +84,4 @@ function updateElapsed(state: GameState): GameState {
     ...state,
     elapsedSeconds: reader.actualElapsedSeconds,
   };
-}
-
-function secsPerQuestion(limit: TimeLimits): number {
-  switch (limit) {
-    case 'easy':
-      return 5;
-    case 'med':
-      return 4;
-    case 'hard':
-      return 2.5;
-    case 'insane':
-      return 1;
-  }
 }

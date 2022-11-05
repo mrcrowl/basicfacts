@@ -1,4 +1,4 @@
-import { ExitButton } from '../../components/ExitButton';
+import { ExitButton } from '../../components/HomeButton';
 import { AnswerButton } from './AnswerButton';
 import { AnswerButtonContainer } from './AnswerButtonContainer';
 import { Hourglass } from './Hourglass';

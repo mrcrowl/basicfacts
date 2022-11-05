@@ -9,7 +9,7 @@ const CONTAINER_STYLES = css`
   border: solid 1px #d0d0d0;
   border-radius: 0.5rem;
   left: 25vw;
-  top: 3vh;
+  top: 3.5vh;
   overflow: hidden;
 `;
 

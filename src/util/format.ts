@@ -28,3 +28,14 @@ export function padZero(n: number, size: number): string {
   const padded = `00000${n}`;
   return padded.slice(padded.length - size);
 }
+
+export function secondsToWholeMinsAndLeftoverSecs(remainingSeconds: number) {
+  const wholeMinutes = Math.trunc(remainingSeconds / 60);
+  const leftoverSeconds = remainingSeconds - wholeMinutes * 60;
+  return { wholeMinutes, leftoverSeconds };
+}
+
+export function formatDuration(seconds: number): string {
+  const { wholeMinutes, leftoverSeconds } = secondsToWholeMinsAndLeftoverSecs(seconds);
+  return `${wholeMinutes > 0 ? wholeMinutes + 'm ' : ''}${leftoverSeconds}s`;
+}

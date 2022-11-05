@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router';
+import { ExitButton } from '../../components/HomeButton';
 
 const COUNTDOWN_SCREEN_STYLES = css`
   width: 100vw;
@@ -22,5 +23,12 @@ export function CountdownScreen() {
     return () => clearInterval(handle);
   });
 
-  return number === 0 ? <Navigate to="/game" replace /> : <div css={COUNTDOWN_SCREEN_STYLES}>{number}</div>;
+  return number === 0 ? (
+    <Navigate to="/game" replace />
+  ) : (
+    <div css={COUNTDOWN_SCREEN_STYLES}>
+      <ExitButton />
+      <div>{number}</div>
+    </div>
+  );
 }

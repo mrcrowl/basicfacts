@@ -4,7 +4,7 @@ import { Game } from './screens/game/Game';
 import { GameOptions } from './screens/game/model';
 import { Menu } from './screens/menu/MenuScreen';
 
-const DEFAULT_GAME_OPTIONS: GameOptions = { max: 10, min: 1, mode: 'div', questions: 100, timeLimit: 'med' };
+const DEFAULT_GAME_OPTIONS: GameOptions = { max: 10, min: 1, mode: 'div', questions: 20, timeLimit: 'med' };
 
 function App() {
   return (

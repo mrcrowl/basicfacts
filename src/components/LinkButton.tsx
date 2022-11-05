@@ -9,15 +9,12 @@ type LinkButtonProps = {
   onClick?: React.MouseEventHandler;
 };
 
-const START_BUTTON_STYLES = css`
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
+const LINK_BUTTON_STYLES = css`
   text-align: center;
   appearance: none;
   border: none;
   background: none;
+  padding: 0 1rem;
   font-size: 3rem;
   line-height: 4rem;
   border: solid 0.25rem darkgreen;
@@ -28,6 +25,7 @@ const START_BUTTON_STYLES = css`
   background: lightgreen;
   color: green;
   font-weight: bold;
+  width: 100%;
 
   &:active {
     bottom: 0.9rem;
@@ -35,9 +33,9 @@ const START_BUTTON_STYLES = css`
   }
 `;
 
-export function StartButton({ to, children, onClick }: LinkButtonProps) {
+export function LinkButton({ to, children, onClick }: LinkButtonProps) {
   return (
-    <Link to={to} css={START_BUTTON_STYLES} onClick={onClick}>
+    <Link to={to} css={LINK_BUTTON_STYLES} onClick={onClick}>
       {children}
     </Link>
   );

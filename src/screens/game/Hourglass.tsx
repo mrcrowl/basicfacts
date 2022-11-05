@@ -1,20 +1,27 @@
 import { css } from '@emotion/react';
-import { padZero } from '../../util/format';
+import { padZero, secondsToWholeMinsAndLeftoverSecs } from '../../util/format';
 
 const HOURGLASS_STYLES = css`
   position: absolute;
   right: 1rem;
   top: 2vh;
   color: grey;
+
+  &.close {
+    color: red;
+    font-weight: bold;
+  }
 `;
 
 type HourglassProps = { remainingSeconds: number };
 export function Hourglass({ remainingSeconds }: HourglassProps) {
-  const wholeMinutes = Math.trunc(remainingSeconds / 60);
-  const leftoverSeconds = remainingSeconds - wholeMinutes * 60;
+  const { wholeMinutes, leftoverSeconds } = secondsToWholeMinsAndLeftoverSecs(remainingSeconds);
+
+  const isClose = wholeMinutes === 0 && leftoverSeconds < 10;
+  const className = isClose ? 'close' : '';
 
   return (
-    <div css={HOURGLASS_STYLES}>
+    <div css={HOURGLASS_STYLES} className={className}>
       {wholeMinutes}:{padZero(leftoverSeconds, 2)}
     </div>
   );

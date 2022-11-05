@@ -9,6 +9,7 @@ export type GameOptions = {
 };
 
 export type GameState = {
+  readonly options: GameOptions;
   readonly activeProblemIndex: number;
   readonly problems: readonly Problem[];
   readonly problemCount: number;
@@ -44,15 +45,3 @@ export type UpdateElapsedAction = {
 export type GameActions = ChooseAnswerAction | StartGameAction | UpdateElapsedAction;
 
 export type GameDispatch = React.Dispatch<GameActions>;
-
-export class GameReader {
-  constructor(public state: GameState) {}
-
-  get elapsedChanged(): boolean {
-    return this.actualElapsedSeconds !== this.state.elapsedSeconds;
-  }
-
-  get actualElapsedSeconds() {
-    return Math.trunc((Date.now() - this.state.startTimestamp) / 1000);
-  }
-}

@@ -1,11 +1,14 @@
 import { css } from '@emotion/react';
-import { StartButton } from './StartButton';
+import { ButtonDock } from '../../components/ButtonDock';
+import { LinkButton } from '../../components/LinkButton';
 
 export function Menu() {
   return (
     <>
       <Title />
-      <StartButton to="/countdown">START!</StartButton>
+      <ButtonDock>
+        <LinkButton to="/countdown">START!</LinkButton>
+      </ButtonDock>
     </>
   );
 }
