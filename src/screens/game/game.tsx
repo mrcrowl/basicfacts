@@ -1,7 +1,26 @@
+import { useReducer } from 'react';
 import { GameScreen } from './GameScreen';
+import { GameActions, GameOptions, GameState } from './model';
+import { makeProblems } from './problem';
 
-export function Game() {
-  const answers = ['56', '63', '12', '49'];
+type GameProps = { options: GameOptions };
+export function Game(props: GameProps) {
+  const [state, dispatch] = useReducer(gameReducer, props, makeGameState);
 
-  return <GameScreen answers={answers} />;
+  return <GameScreen state={state} dispatch={dispatch} />;
+}
+
+function makeGameState(props: GameProps): GameState {
+  const problems = makeProblems(props.options);
+
+  return {
+    problems,
+    activeProblemIndex: 9,
+    activeProblem: problems[0],
+    problemCount: problems.length,
+  };
+}
+
+function gameReducer(state: GameState, _: GameActions): GameState {
+  return state;
 }

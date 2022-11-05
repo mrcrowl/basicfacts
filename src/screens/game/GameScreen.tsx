@@ -1,14 +1,15 @@
 import { AnswerButton } from './AnswerButton';
 import { AnswerButtonContainer } from './AnswerButtonContainer';
+import { GameDispatch, GameState } from './model';
 import { Question } from './Question';
 
-type GameScreenProps = { answers: string[] };
-export function GameScreen({ answers }: GameScreenProps) {
+type GameScreenProps = { state: GameState; dispatch: GameDispatch };
+export function GameScreen({ state }: GameScreenProps) {
   return (
     <>
-      <Question prompt="7 × 8" />
+      <Question prompt={state.activeProblem.prompt} />
       <AnswerButtonContainer>
-        {answers.map((answer) => (
+        {state.activeProblem.choices.map((answer) => (
           <AnswerButton answer={answer} onClick={(answer) => alert(answer)} />
         ))}
       </AnswerButtonContainer>
