@@ -6,9 +6,11 @@ import { GameReader } from './GameReader';
 import { makeProblems } from './problem';
 import { useCountdownTimer } from './useCountdownTimer';
 import { secsPerQuestion } from '../../util/tuning';
+import { Settings } from '../../settings';
 
 type GameProps = { options: GameOptions };
-export function Game(props: GameProps) {
+export function Game() {
+  const props: GameProps = { options: Settings.gameOptions };
   const [state, dispatch] = useReducer(gameReducer, props, makeGameState);
   useStartGame(dispatch);
   useCountdownTimer(state, dispatch);

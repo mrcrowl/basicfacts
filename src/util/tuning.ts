@@ -3,11 +3,11 @@ import { TimeLimits } from '../screens/game/model';
 export function secsPerQuestion(limit: TimeLimits): number {
   switch (limit) {
     case 'easy':
-      return 4;
+      return 5;
     case 'med':
-      return 2.5;
+      return 3;
     case 'hard':
-      return 1.5;
+      return 2;
     case 'insane':
       return 1;
   }
