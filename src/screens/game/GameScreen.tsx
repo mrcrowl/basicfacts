@@ -1,3 +1,4 @@
+import { ExitButton } from '../../components/ExitButton';
 import { AnswerButton } from './AnswerButton';
 import { AnswerButtonContainer } from './AnswerButtonContainer';
 import { GameDispatch, GameState } from './model';
@@ -20,6 +21,7 @@ export function GameScreen({ state, dispatch }: GameScreenProps) {
           return <AnswerButton answer={answer} onClick={handleClick} />;
         })}
       </AnswerButtonContainer>
+      <ExitButton />
     </>
   );
 }
