@@ -1,12 +1,12 @@
 import { css } from '@emotion/react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { StartButton } from './StartButton';
 
 export function Menu() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function goGame() {
-    history.push('/game');
+    navigate('/game');
   }
   return (
     <>
