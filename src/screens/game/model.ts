@@ -10,11 +10,12 @@ export type GameOptions = {
 
 export type GameState = {
   readonly activeProblemIndex: number;
-  readonly activeProblem: Problem;
   readonly problems: readonly Problem[];
   readonly problemCount: number;
   readonly answers: string[];
-  readonly remainingSeconds: number;
+  readonly allowedSeconds: number;
+  readonly elapsedSeconds: number;
+  readonly startTimestamp: number;
 };
 
 export type Problem = {
@@ -32,6 +33,26 @@ export type ChooseAnswerAction = {
   readonly answer: string;
 };
 
-export type GameActions = ChooseAnswerAction;
+export type StartGameAction = {
+  readonly type: 'start_game';
+};
+
+export type UpdateElapsedAction = {
+  readonly type: 'update_elapsed';
+};
+
+export type GameActions = ChooseAnswerAction | StartGameAction | UpdateElapsedAction;
 
 export type GameDispatch = React.Dispatch<GameActions>;
+
+export class GameReader {
+  constructor(public state: GameState) {}
+
+  get elapsedChanged(): boolean {
+    return this.actualElapsedSeconds !== this.state.elapsedSeconds;
+  }
+
+  get actualElapsedSeconds() {
+    return Math.trunc((Date.now() - this.state.startTimestamp) / 1000);
+  }
+}
