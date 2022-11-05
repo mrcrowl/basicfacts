@@ -45,16 +45,32 @@ const TIME_LIMIT_OPTIONS: InputOption<TimeLimits>[] = [
 export function Menu() {
   const options = Settings.gameOptions;
   const [timeLimit, setTimeLimit] = useState(options.timeLimit);
-  const [mode, setMode] = useState(options.mode);
+  const [modes, setModes] = useState(options.modes);
   const [questions, setQuestions] = useState(options.questions);
 
-  Settings.gameOptions = { max: 10, min: 1, mode, questions, timeLimit };
+  Settings.gameOptions = { max: 10, min: 1, modes, questions, timeLimit };
+
+  function handleModeSelect(mode: GameModes) {
+    const newModes = [...modes.filter((m) => m !== mode), mode];
+    setModes(newModes);
+  }
+
+  function handleModeDeselect(mode: GameModes) {
+    const newModes = modes.filter((m) => m !== mode);
+    setModes(newModes);
+  }
 
   return (
     <div css={MENU_STYLES}>
       <Title />
       <p>Which mode?</p>
-      <SplitButton modes options={MODE_OPTIONS} value={mode} onSelect={(mode) => setMode(mode)}></SplitButton>
+      <SplitButton
+        modes
+        options={MODE_OPTIONS}
+        value={modes}
+        onSelect={handleModeSelect}
+        onDeselect={handleModeDeselect}
+      ></SplitButton>
       <p>How many questions?</p>
       <SplitButton
         options={QUESTION_OPTIONS}

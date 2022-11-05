@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type GameOptions = {
-  readonly mode: GameModes;
+  readonly modes: GameModes[];
   readonly questions: number;
   readonly timeLimit: TimeLimits;
   readonly max: number;

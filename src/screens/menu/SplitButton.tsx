@@ -37,19 +37,31 @@ export type InputOption<T> = { text: string; value: T };
 export type SplitButtonProps<T> = {
   modes?: true;
   options: InputOption<T>[]; //
-  value: T;
-  onSelect(value: T): void;
+  value: T | T[];
+  onSelect?(value: T): void;
+  onDeselect?(value: T): void;
 };
-export function SplitButton<T>({ modes, options, value, onSelect }: SplitButtonProps<T>) {
+export function SplitButton<T>({ modes, options, value, onSelect, onDeselect }: SplitButtonProps<T>) {
   const percentWidth = `${100 / options.length}%`;
 
   return (
     <div css={CONTAINER_STYLES} className={modes ? 'modes' : ''}>
       {options.map((o) => {
-        const selected = o.value === value;
+        const selected = Array.isArray(value) ? value.includes(o.value) : o.value === value;
 
         function handleSelect() {
-          onSelect(o.value);
+          if (Array.isArray(value)) {
+            const values = new Set(value);
+            // Multiple.
+            if (values.has(o.value)) {
+              onDeselect?.(o.value);
+            } else {
+              onSelect?.(o.value);
+            }
+          } else {
+            // Single.
+            onSelect?.(o.value);
+          }
         }
 
         return (

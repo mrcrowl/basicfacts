@@ -16,7 +16,7 @@ export function makeProblems(options: GameOptions): readonly Problem[] {
 }
 
 function makeProblem(options: GameOptions): Problem {
-  switch (options.mode) {
+  switch (options.modes[0]) {
     case 'div':
       return makeDivisionProblem(options);
     case 'mult':
@@ -25,7 +25,7 @@ function makeProblem(options: GameOptions): Problem {
       return Math.random() < 0.5 ? makeDivisionProblem(options) : makeMultiplicationProblem(options);
     }
     default:
-      throw new Error(`mode NYI: ${options.mode}`);
+      throw new Error(`mode NYI: ${options.modes[0]}`);
   }
 }
 
