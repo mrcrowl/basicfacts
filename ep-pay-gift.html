@@ -15,6 +15,10 @@
       padding: 0;
     }
 
+    img {
+      width: 100vw;
+    }
+
     html,
     body {
       background: #01215d;
@@ -24,12 +28,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-    }
-
-    @media screen and (max-width: 960px) {
-      body {
-        font-size: 5vw;
-      }
+      font-size: 32pt;
     }
 
     body {
@@ -60,6 +59,7 @@
 
     table.deets td {
       line-height: 1.8rem;
+      white-space: nowrap;
     }
 
     table.deets tr td:first-child {
@@ -115,17 +115,17 @@
     }
   </style>
   <body>
-    <img src="./assets/b-awesome.png" style="width: 100%" />
+    <img src="./assets/b-awesome.png" width="100vw" />
     <h1>Payment Options</h1>
 
     <h2>Bank Transfer</h2>
     <table class="deets">
       <tr>
-        <td>Account</td>
+        <td>A/C</td>
         <td>06-0901-0761106-42</td>
       </tr>
       <tr>
-        <td>Reference</td>
+        <td>Ref</td>
         <td>
           EP-{REF}<span class="dull"><span class="plain">&nbsp; e.g. </span>EP-BATMAN<span class="plain"></span></span>
         </td>
@@ -143,9 +143,9 @@
         <td>0210446441</td>
       </tr>
       <tr>
-        <td>Reference</td>
+        <td>Ref</td>
         <td>
-          EP-{REF}<span class="dull"><span class="plain">&nbsp; e.g. </span>EP-CRAYOLA<span class="plain"></span></span>
+          EP-{REF}<span class="dull"><span class="plain">&nbsp; e.g. </span>EP-BATMAN<span class="plain"></span></span>
         </td>
       </tr>
     </table>
